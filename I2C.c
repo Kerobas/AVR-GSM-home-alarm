@@ -97,7 +97,7 @@ void check_temperature(void)
 		time_stamp_s = get_time_s();
 	}
 	
-	if(config.temp_control && temperature!=-127)
+	if(config.temp_control && temperature!=-127) // -127 - это начальное значение до первого считывания
 	{
 		if((temperature >= config.maxtemp) || (temperature <= config.mintemp))
 		{

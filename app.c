@@ -86,8 +86,6 @@ void send_alarm_signal_if_needed(void)
 	
 	if(config.guard && motion_detected)
 	{
-		config.guard = false;
-		EEPROM_save_guard();
 		ptr = sms;
 		ptr += sprintf_P(ptr, PSTR("Home invasion!!!"));
 		if(motion_detected & FRONT_SENSOR_MASK)
@@ -102,6 +100,8 @@ void send_alarm_signal_if_needed(void)
 			send_sms(sms, &config.user_phone[i][0]);
 			i++;
 		}
+		config.guard = false; // тревожный сигнал отправлен, снимаем с охраны
+		EEPROM_save_guard();
 	}
 	
 	if(motion_detected & FRONT_SENSOR_MASK)

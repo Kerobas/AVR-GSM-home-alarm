@@ -69,6 +69,8 @@ void eeprom_read_config(char start)
 		config.temp_interval_h = 12;
 		config.temp_control = true;
 		config.led_mode = 1;
+		config.mcount = 255;
+		config.mpause_count = 255;
 		config.first_usage = 0xAB;
 		eeprom_save_config();
 	}

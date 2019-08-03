@@ -294,25 +294,25 @@ void led_management(void)
 // функция вызывается с периодом 10 мс
 void check_motion(void)
 {
-	static char count = 0;
-	static char state = true;
+	static Uchar count = 0;
+	static Uchar pause_count = 0;
 	char motion;
 	
-	motion = is_motion();
+	if(count < 255)
+		count++;
+	motion = is_motion() & is_motion();
 	if(motion)
 	{
-		if(count < 3)
-			count++;
-		else if(state == false)
-		{
+		if(count >= config.mcount)
 			motion_detected = motion;
-			state = true;
-		}
+		pause_count = 0;
 	}
 	else
 	{
-		count = false;
-		state = false;
+		if(pause_count < config.mpause_count)
+			pause_count++;
+		else
+			count = false;
 	}
 }
 

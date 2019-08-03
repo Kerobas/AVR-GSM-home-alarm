@@ -549,6 +549,20 @@ char* get_param(char *str, char *sms_text)
 		return str;
 	}
 	
+	else if(memcmp_P(str, PSTR("mcount;"), 7) == 0)
+	{
+		str += 7;
+		sprintf_P(sms_text, PSTR("mcount=%u;"), (uint16_t)config.mcount*10);
+		return str;
+	}
+	
+	else if(memcmp_P(str, PSTR("mpcount;"), 8) == 0)
+	{
+		str += 8;
+		sprintf_P(sms_text, PSTR("mpcount=%u;"), (uint16_t)config.mpause_count*10);
+		return str;
+	}
+	
 	return false;
 }
 
@@ -969,6 +983,38 @@ char* set_param(char *ptr)
 			return false;
 		config.zone_mask &= ~SIDE_SENSOR_MASK;
 		config.zone_mask |= temp;
+		ptr++;
+		return ptr;
+	}
+	
+	if(memcmp_P(ptr, PSTR("mcount="), 7) == 0)
+	{
+		Ulong c;
+		ptr+=7;
+		if(isdigit(*ptr) == false)
+			return false;
+		c = strtoul(ptr, &ptr, 10);
+		if(c > 2550)
+			return false;
+		if(*ptr != ';')
+			return false;
+		config.mcount = c/10;
+		ptr++;
+		return ptr;
+	}
+	
+	if(memcmp_P(ptr, PSTR("mpcount="), 8) == 0)
+	{
+		Ulong c;
+		ptr+=8;
+		if(isdigit(*ptr) == false)
+			return false;
+		c = strtoul(ptr, &ptr, 10);
+		if(c > 2550)
+			return false;
+		if(*ptr != ';')
+			return false;
+		config.mpause_count = c/10;
 		ptr++;
 		return ptr;
 	}

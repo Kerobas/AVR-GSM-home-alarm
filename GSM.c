@@ -153,7 +153,7 @@ char gsm_mdm_inter_pin(void)
 
 //*******************************************************************************************************************
 
-char __attribute__((optimize("-Os"))) gsm_mdm_init(void)
+char gsm_mdm_init(void)
 {
 	Uchar i;
 	char rez;

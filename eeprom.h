@@ -25,6 +25,8 @@ typedef struct{
 	Ushort interval_after_button_m;
 	Ushort interval_betwing_alarms_h;
 	Ushort temp_interval_h;
+	Uchar mcount;
+	Uchar mpause_count; 
 	char reports_en;
 	char admin_mode;
 	char admin_phone[TOTAL_ADMIN_NUMBER][13];
