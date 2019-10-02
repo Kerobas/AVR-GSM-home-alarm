@@ -7,15 +7,16 @@ static char uart_in_buf[UART_BUF_SIZE];
 static Uchar head;
 static Uchar tail;
 
+// baud rate = 115200, Fosc = 7.373 MHz, 
 void init_uart(char init)
 {
 	if(init)
 	{
 		UCSRA=0x00;
-		UCSRB=0x98;
-		UCSRC=0x86;
+		UCSRB=RXCIE | RXEN | TXEN; // 0x98
+		UCSRC= URSEL | UCSZ0 | UCSZ1; // 0x86
 		UBRRH=0x00;
-		UBRRL=0x03;
+		UBRRL=0x03; // baud rate = 115200
 	}
 	else // deinit
 	{
